@@ -1,0 +1,22 @@
+# Pliki i katalogi Pythona
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Środowiska wirtualne
+venv/
+.env/
+
+# Pliki konfiguracyjne i klucze
+*.env
+config/*.json
+config/*.yaml
+
+# Pliki systemowe
+.DS_Store
+Thumbs.db
+
+# Baza danych SQLite
+*.sqlite3
+*.db 
