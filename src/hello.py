@@ -7,7 +7,7 @@ import sys
 import datetime
 
 def main():
-    """Główna funkcja programu"""
+    """Glowna funkcja programu"""
     print("=" * 50)
     print("Witaj w aplikacji pierwszaapka!")
     print("=" * 50)
@@ -17,7 +17,7 @@ def main():
     print(f"Data i czas: {datetime.datetime.now()}")
     print(f"Katalog roboczy: {sys.path[0]}")
     
-    print("\nAplikacja działa poprawnie! 🎉")
+    print("\nAplikacja dziala poprawnie! 🎉")
     print("=" * 50)
 
 if __name__ == "__main__":

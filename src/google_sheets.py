@@ -15,36 +15,36 @@ SPREADSHEET_ID = '1y4I-0Evf56NGaWGnkELVPm7p66hywzLA8LLeviqkvhw'
 RANGE_NAME = 'Sheet1!A:Z'
 
 def load_credentials():
-    """Ładuje dane uwierzytelniające z pliku JSON"""
+    """Laduje dane uwierzytelniajace z pliku JSON"""
     try:
-        # Ścieżka do pliku z kluczami
+        # Sciezka do pliku z kluczami
         credentials_path = os.path.join('config', 'pierwszaapka-464314-9c00bd4d0038.json')
         
-        # Sprawdź czy plik istnieje
+        # Sprawdz czy plik istnieje
         if not os.path.exists(credentials_path):
-            print(f"❌ Błąd: Plik {credentials_path} nie istnieje!")
+            print(f"❌ Blad: Plik {credentials_path} nie istnieje!")
             return None
         
-        # Załaduj dane uwierzytelniające
+        # Zaladuj dane uwierzytelniajace
         credentials = service_account.Credentials.from_service_account_file(
             credentials_path,
             scopes=['https://www.googleapis.com/auth/spreadsheets.readonly']
         )
         
-        print("✅ Dane uwierzytelniające załadowane pomyślnie")
+        print("✅ Dane uwierzytelniajace zaladowane pomyslnie")
         return credentials
         
     except Exception as e:
-        print(f"❌ Błąd podczas ładowania danych uwierzytelniających: {e}")
+        print(f"❌ Blad podczas ladowania danych uwierzytelniajacych: {e}")
         return None
 
 def get_sheets_data(credentials):
     """Pobiera dane z Google Sheets"""
     try:
-        # Utwórz serwis Google Sheets
+        # Utworz serwis Google Sheets
         service = build('sheets', 'v4', credentials=credentials)
         
-        print(f"🔗 Łączenie z arkuszem: {SPREADSHEET_ID}")
+        print(f"🔗 Laczenie z arkuszem: {SPREADSHEET_ID}")
         
         # Pobierz dane
         result = service.spreadsheets().values().get(
@@ -62,36 +62,36 @@ def get_sheets_data(credentials):
         return values
         
     except Exception as e:
-        print(f"❌ Błąd podczas pobierania danych: {e}")
+        print(f"❌ Blad podczas pobierania danych: {e}")
         return []
 
 def filter_buy_recommendations(data):
-    """Filtruje wiersze z oceną 'kupuj'"""
+    """Filtruje wiersze z ocena 'kupuj'"""
     if not data:
         return []
     
-    # Pierwszy wiersz to nagłówki
+    # Pierwszy wiersz to naglowki
     headers = data[0]
     
-    # Znajdź indeks kolumny 'ocena'
+    # Znajdz indeks kolumny 'ocena'
     try:
         ocena_index = headers.index('ocena')
     except ValueError:
-        print("❌ Nie znaleziono kolumny 'ocena' w nagłówkach")
+        print("❌ Nie znaleziono kolumny 'ocena' w naglowkach")
         return []
     
-    # Filtruj wiersze z oceną 'kupuj'
+    # Filtruj wiersze z ocena 'kupuj'
     buy_recommendations = []
-    for i, row in enumerate(data[1:], start=2):  # start=2 bo pomijamy nagłówki
+    for i, row in enumerate(data[1:], start=2):  # start=2 bo pomijamy naglowki
         if len(row) > ocena_index and row[ocena_index].lower() == 'kupuj':
             buy_recommendations.append(row)
     
     return buy_recommendations
 
 def display_data(data):
-    """Wyświetla pobrane dane"""
+    """Wyswietla pobrane dane"""
     if not data:
-        print("Brak danych do wyświetlenia")
+        print("Brak danych do wyswietlenia")
         return
     
     print("\n" + "="*50)
@@ -101,7 +101,7 @@ def display_data(data):
     for i, row in enumerate(data):
         print(f"Wiersz {i+1}: {row}")
     
-    # Filtruj i wyświetl tylko rekomendacje "kupuj"
+    # Filtruj i wyswietl tylko rekomendacje "kupuj"
     buy_recommendations = filter_buy_recommendations(data)
     
     print("\n" + "="*50)
@@ -109,8 +109,8 @@ def display_data(data):
     print("="*50)
     
     if buy_recommendations:
-        headers = data[0]  # Nagłówki z pierwszego wiersza
-        print(f"Nagłówki: {headers}")
+        headers = data[0]  # Naglowki z pierwszego wiersza
+        print(f"Naglowki: {headers}")
         print("-" * 50)
         
         for i, row in enumerate(buy_recommendations, start=1):
@@ -118,14 +118,14 @@ def display_data(data):
         
         print(f"\n✅ Znaleziono {len(buy_recommendations)} rekomendacji 'kupuj'")
     else:
-        print("❌ Nie znaleziono żadnych rekomendacji 'kupuj'")
+        print("❌ Nie znaleziono zadnych rekomendacji 'kupuj'")
 
 def main():
-    """Główna funkcja programu"""
+    """Glowna funkcja programu"""
     print("🚀 Uruchamianie skryptu Google Sheets...")
     print("="*50)
     
-    # Załaduj dane uwierzytelniające
+    # Zaladuj dane uwierzytelniajace
     credentials = load_credentials()
     if not credentials:
         return
@@ -133,11 +133,11 @@ def main():
     # Pobierz dane z arkusza
     data = get_sheets_data(credentials)
     
-    # Wyświetl dane
+    # Wyswietl dane
     display_data(data)
     
     print("\n" + "="*50)
-    print("✅ Skrypt zakończony pomyślnie!")
+    print("✅ Skrypt zakonczony pomyslnie!")
 
 if __name__ == "__main__":
     main() 
